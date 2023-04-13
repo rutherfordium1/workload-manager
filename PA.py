@@ -46,11 +46,11 @@ def get_cpu_temperature():
             return float(line.split('+')[1].split('C')[0])
         return 0
 
-while True
+while True:
             temp = get_cpu_temperature()
             if temp > 70:   # Adjust the temperature threshold as needed
                 os.system('tasket -c 0-3 command1')     # Allocate command1 to CPUs 0-3
-            else
+            else:
                 os.system('tasket -c 4-7 command2')     # Allocate command2 to CPUs 4-7
 
 time.sleep(60)  # Sleep interval
