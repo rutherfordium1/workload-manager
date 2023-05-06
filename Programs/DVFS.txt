@@ -1,0 +1,33 @@
+# Here's an example Python script that dynamically changes the CPU frequency on an Ubuntu Server based on the CPU utilization using the cpufrequtils package:
+
+import os
+import psutil
+import time
+
+# Set the governor to "ondemand"
+os.system("sudo cpufreq-set -g ondemand")
+
+# Set the minimum and maximum frequency to 1.2GHz and 2.4GHz respectively
+os.system("sudo cpufreq-set -u 2400000")
+os.system("sudo cpufreq-set -d 1200000")
+
+while True:
+    # Get the current CPU utilization
+    cpu_util = psutil.cpu_percent()
+
+    # Adjust the frequency based on the CPU utilization
+    if cpu_util < 20:
+        os.system("sudo cpufreq-set -f 1200000")
+    elif cpu_util < 50:
+        os.system("sudo cpufreq-set -f 1600000")
+    elif cpu_util < 80:
+        os.system("sudo cpufreq-set -f 2000000")
+    else:
+        os.system("sudo cpufreq-set -f 2400000")
+
+    # Print the current CPU utilization and frequency
+    freq = os.popen("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq").read().strip()
+    print(f"CPU utilization: {cpu_util}% | CPU frequency: {freq}")
+
+    # Wait for 5 seconds before checking the CPU utilization again
+    time.sleep(5)
